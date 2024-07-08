@@ -1,5 +1,6 @@
 import styles from './Menu.module.css'
 import React from 'react';
+
 interface MenuProps {
     showMenu: boolean;
   }

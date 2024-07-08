@@ -4,10 +4,39 @@ import Sidebar from "@/components/Sidebar/Sidebar";
 import Track from "@/components/Track/Track";
 import Bar from "@/components/Bar/Bar";
 import Menu from "@/components/Menu/Menu";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+interface Track {
+  id: number;
+  name: string;
+  author: string;
+  album: string;
+  duration: string;
+}
+
+
 export default function Home() {
   const [showMenu, setShiowMenu] = useState(false);
-  
+  const [tracks, setTracks] = useState<Track[]>([]);
+  // const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchTracks = async () => {
+      try {
+        const response = await fetch("https://skypro-music-api.skyeng.tech/catalog/track/all/");
+        if (!response.ok) {
+          throw new Error(`Ошибка: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setTracks(data);
+      } catch (err) {
+        console.log(err)
+      }
+    };
+
+    fetchTracks();
+  }, []);
+
   return (
     <>
     <div className="wrapper">
@@ -63,23 +92,11 @@ export default function Home() {
                 </div>
               </div>
               <div className="content__playlist playlist">
-                <Track/>
-                <Track/>
-                <Track/>
-                <Track/>
-                <Track/>
-                <Track/>
-                <Track/>
-                <Track/>
-                <Track/>
-                <Track/>
-                <Track/>
-                <Track/>
-                <Track/>
-                <Track/>
-                <Track/>
-                <Track/>
-                <Track/>
+              {tracks?.map((track) => (
+                <Track 
+                  track={track}
+                />    
+                ))}
               </div>
             </div>
           </div>
