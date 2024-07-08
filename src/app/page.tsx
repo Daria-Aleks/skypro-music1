@@ -12,13 +12,15 @@ interface Track {
   author: string;
   album: string;
   duration: string;
+  release_date: Date;
+  genre: string;
 }
 
 
 export default function Home() {
-  const [showMenu, setShiowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const [tracks, setTracks] = useState<Track[]>([]);
-  // const [error, setError] = useState<string | null>(null);
+  const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchTracks = async () => {
@@ -28,14 +30,19 @@ export default function Home() {
           throw new Error(`Ошибка: ${response.statusText}`);
         }
         const data = await response.json();
-        setTracks(data);
+        setTracks(data)
       } catch (err) {
-        console.log(err)
+        alert(err)
       }
     };
 
     fetchTracks();
   }, []);
+
+  const uniqueAuthors = Array.from(new Set(tracks.map(track => track.author)));
+  const uniqueYears = Array.from(new Set(tracks.map(track => new Date(track.release_date).getFullYear())));
+  const uniqueGenres = Array.from(new Set(tracks.map(track => track.genre)));
+  console.log(uniqueAuthors)
 
   return (
     <>
@@ -48,7 +55,7 @@ export default function Home() {
               width={250}
               height={150} />
             </div>
-            <div className="nav__burger burger" onClick={() => setShiowMenu(!showMenu)}>
+            <div className="nav__burger burger" onClick={() => setShowMenu(!showMenu)}>
               <span className="burger__line" />
               <span className="burger__line" />
               <span className="burger__line" />
@@ -72,14 +79,38 @@ export default function Home() {
             <h2 className="centerblock__h2">Треки</h2>
             <div className="centerblock__filter filter">
               <div className="filter__title">Искать по:</div>
-              <div className="filter__button button-author _btn-text">
+              <div className="filter__button button-author _btn-text"
+               onClick={() => setActiveFilter(activeFilter === 'author' ? null : 'author')}>
                 исполнителю
               </div>
-              <div className="filter__button button-year _btn-text">
+              {activeFilter === 'author' && (
+                  <div className="filter__dropdown">
+                    {uniqueAuthors.map(author => (
+                      <div key={author}>{author}</div>
+                    ))}
+                  </div>
+                )}
+              <div className="filter__button button-year _btn-text"
+              onClick={() => setActiveFilter(activeFilter === 'year' ? null : 'year')}>
                 году выпуска
               </div>
-              <div className="filter__button button-genre _btn-text">жанру</div>
+              {activeFilter === 'year' && (
+                <div className="filter__dropdown">
+                  {uniqueYears.map((year, index)=> (
+                    <div key={index}>{year}</div>
+                      ))}
+                    </div>
+                  )}
+              <div className="filter__button button-genre _btn-text"
+              onClick={() => setActiveFilter(activeFilter === 'genre' ? null : 'genre')}>жанру</div>
             </div>
+            {activeFilter === 'genre' && (
+                  <div className="filter__dropdown">
+                    {uniqueGenres.map(genre => (
+                      <div key={genre}>{genre}</div>
+                    ))}
+                  </div>
+                )}
             <div className="centerblock__content playlist-content">
               <div className="content__title playlist-title">
                 <div className="playlist-title__col col01">Трек</div>
@@ -92,8 +123,9 @@ export default function Home() {
                 </div>
               </div>
               <div className="content__playlist playlist">
-              {tracks?.map((track) => (
+              {tracks?.map((track, index) => (
                 <Track 
+                  key={index}
                   track={track}
                 />    
                 ))}
