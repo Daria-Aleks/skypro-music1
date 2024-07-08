@@ -1,10 +1,13 @@
+"use client"
 import Image from "next/image";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import Track from "@/components/Track/Track";
 import Bar from "@/components/Bar/Bar";
 import Menu from "@/components/Menu/Menu";
-
+import { useState } from "react";
 export default function Home() {
+  const [showMenu, setShiowMenu] = useState(false);
+  
   return (
     <>
     <div className="wrapper">
@@ -16,12 +19,14 @@ export default function Home() {
               width={250}
               height={150} />
             </div>
-            <div className="nav__burger burger">
+            <div className="nav__burger burger" onClick={() => setShiowMenu(!showMenu)}>
               <span className="burger__line" />
               <span className="burger__line" />
               <span className="burger__line" />
             </div>
-            <Menu/>
+            {
+              showMenu ? <Menu showMenu={showMenu}/> : <div></div>
+            }
           </nav>
           <div className="main__centerblock centerblock">
             <div className="centerblock__search search">

@@ -1,7 +1,14 @@
 import styles from './Menu.module.css'
-const Menu = () => {
+import React from 'react';
+interface MenuProps {
+    showMenu: boolean;
+  }
+  
+const Menu: React.FC<MenuProps> = ({ showMenu }) => {
     return (
-        <div className={styles.navMenu}>
+        <div>
+            { showMenu ?
+        <div className={styles.navMenu}> 
         <ul className={styles.menuList}>
           <li className={styles.menuItem}>
             <a className={styles.menuLink}>
@@ -19,7 +26,9 @@ const Menu = () => {
             </a>
           </li>
         </ul>
-      </div>
+      </div> : <div></div>
+        }
+        </div>
     )
 }
 export default Menu;
