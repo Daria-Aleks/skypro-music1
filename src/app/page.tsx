@@ -2,6 +2,7 @@ import Image from "next/image";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import Track from "@/components/Track/Track";
 import Bar from "@/components/Bar/Bar";
+import Menu from "@/components/Menu/Menu";
 
 export default function Home() {
   return (
@@ -20,25 +21,7 @@ export default function Home() {
               <span className="burger__line" />
               <span className="burger__line" />
             </div>
-            <div className="nav__menu menu">
-              <ul className="menu__list">
-                <li className="menu__item">
-                  <a href="#" className="menu__link">
-                    Главное
-                  </a>
-                </li>
-                <li className="menu__item">
-                  <a href="#" className="menu__link">
-                    Мой плейлист
-                  </a>
-                </li>
-                <li className="menu__item">
-                  <a href="../signin.html" className="menu__link">
-                    Войти
-                  </a>
-                </li>
-              </ul>
-            </div>
+            <Menu/>
           </nav>
           <div className="main__centerblock centerblock">
             <div className="centerblock__search search">
