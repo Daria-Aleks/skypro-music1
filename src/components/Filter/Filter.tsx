@@ -7,7 +7,7 @@ interface Track {
   name: string;
   author: string;
   album: string;
-  duration: string;
+  duration_in_seconds: string;
   release_date: Date;
   genre: string;
   track_file: string;

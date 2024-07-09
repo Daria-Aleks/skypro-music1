@@ -5,7 +5,7 @@ interface Track {
   name: string;
   author: string;
   album: string;
-  duration: string;
+  duration_in_seconds: string;
   release_date: Date;
   genre: string;
   track_file: string;
@@ -17,13 +17,22 @@ interface TrackProps {
       name: string;
       author: string;
       album: string;
-      duration: string;
+      duration_in_seconds: string;
       release_date: Date;
       genre: string;
       track_file: string;
   };
   setTrack: (track: Track) => void;
 }
+
+function formatDuration(seconds: string): string {
+  const totalSeconds = parseInt(seconds, 10);
+  const minutes = Math.floor(totalSeconds / 60);
+  const remainingSeconds = totalSeconds % 60;
+  const paddedSeconds = remainingSeconds < 10 ? remainingSeconds : remainingSeconds.toString();
+  return `${minutes}:${paddedSeconds}`;
+}
+
 
 const Track: React.FC<TrackProps> = ({track, setTrack}) => {
     return (
@@ -55,7 +64,7 @@ const Track: React.FC<TrackProps> = ({track, setTrack}) => {
             <svg className={styles.trackTimeSvg} >
               <use xlinkHref="img/icon/sprite.svg#icon-like" />
             </svg>
-            <span className={styles.trackTimeText} >{track.duration}</span>
+            <span className={styles.trackTimeText} >{formatDuration(track.duration_in_seconds)}</span>
           </div>
         </div>
       </div>
