@@ -1,7 +1,7 @@
 import styles from './Filter.module.css'
 const Filter = () => {
     return (
-        <div>
+        <div className={styles.centerblockFilter}>
           <div className={styles.filterTitle}>Искать по:</div>
           <div className={styles.filterButton}>
             исполнителю
