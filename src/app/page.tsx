@@ -17,7 +17,6 @@ interface Track {
 }
 export default function Home() {
   const [tracks, setTracks] = useState<Track[]>([]);
-  // const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchTracks = async () => {
@@ -35,10 +34,6 @@ export default function Home() {
 
     fetchTracks();
   }, []);
-
-  const uniqueAuthors = Array.from(new Set(tracks.map(track => track.author)));
-  const uniqueYears = Array.from(new Set(tracks.map(track => new Date(track.release_date).getFullYear())));
-  const uniqueGenres = Array.from(new Set(tracks.map(track => track.genre)));
 
   return (
     <>
