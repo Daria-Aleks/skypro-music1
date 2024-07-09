@@ -8,7 +8,6 @@ interface TrackProps {
     album: string;
     duration: string;
   };
-
 }
 const Track: React.FC<TrackProps> = ({track}) => {
     return (
