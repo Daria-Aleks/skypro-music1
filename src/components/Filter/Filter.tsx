@@ -10,6 +10,7 @@ interface Track {
   duration: string;
   release_date: Date;
   genre: string;
+  track_file: string;
 }
 interface FilterProps {
 tracks: Track[];

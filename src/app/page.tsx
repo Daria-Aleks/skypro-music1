@@ -14,11 +14,15 @@ interface Track {
   duration: string;
   release_date: Date;
   genre: string;
+  track_file: string;
 }
 export default function Home() {
   const [tracks, setTracks] = useState<Track[]>([]);
-  // const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const [activeTrack, setActiveTrack] = useState<Track | null>(null);
 
+  const setTrack = (track: Track) => {
+    setActiveTrack(track);
+  };
   useEffect(() => {
     const fetchTracks = async () => {
       try {
@@ -42,10 +46,10 @@ export default function Home() {
       <div className={styles.container}>
         <main className={styles.main}>
           <Nav/>
-          <CenterBlock tracks={tracks}/>
+          <CenterBlock tracks={tracks} setTrack={setTrack}/>
           <Sidebar/>
         </main>
-        <Bar/>
+        <Bar track={activeTrack}/>
       </div>
     </div>
   </>
