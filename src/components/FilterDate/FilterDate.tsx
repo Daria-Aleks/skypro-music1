@@ -1,13 +1,20 @@
 import React from 'react';
+import styles from './FilterDate.module.css';
+
 interface FilterDateProps {
     date: any[];
+    offset: number;
   }
-  
-const FilterDate: React.FC<FilterDateProps> = ({date}) => {
+
+const FilterDate: React.FC<FilterDateProps> = ({date, offset}) => {
+  const wrapperStyle = {
+    left:` ${offset}px`,
+  };
+  console.log(wrapperStyle)
     return (
-       <div>
+       <div className={styles.wrapper} style={wrapperStyle}>
         {date.map(col => (
-          <div key={col}>{col}</div>
+          <p className={styles.link} key={col}>{col}</p>
           ))}
        </div>
     )

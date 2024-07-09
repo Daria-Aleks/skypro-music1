@@ -33,3 +33,22 @@
   .filterButton:not(:last-child) {
     margin-right: 10px;
   }
+
+  .active {
+    color: #b672ff;
+    border: 1px solid #b672ff;
+  }
+
+  .col {
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    background:#b672ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    top: 230px;
+    margin-left: -35px;
+  }
