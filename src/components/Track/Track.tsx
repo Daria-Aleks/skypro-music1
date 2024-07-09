@@ -2,11 +2,13 @@ import styles from './Track.module.css';
 import React from 'react';
 interface TrackProps {
   track: {
-    id: number;
-    name: string;
-    author: string;
-    album: string;
-    duration: string;
+      id: number;
+      name: string;
+      author: string;
+      album: string;
+      duration: string;
+      release_date: Date;
+      genre: string;
   };
 }
 const Track: React.FC<TrackProps> = ({track}) => {
