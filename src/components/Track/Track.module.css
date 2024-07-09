@@ -31,7 +31,7 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    /* width: 407px; */
+    width: 200px;
   }
   
   .trackTitleImage {
@@ -72,6 +72,7 @@
     font-size: 16px;
     line-height: 24px;
     color: #4e4e4e;
+    width: 270px;
   }
   .trackTitleSpan a {
     font-style: normal;
@@ -88,7 +89,7 @@
     display: flex;
     -webkit-box-pack: start;
     -ms-flex-pack: start;
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
   
   .trackAuthorLink {
