@@ -31,7 +31,7 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    width: 150px;
+    width: 160px;
   }
   
   .trackTitleImage {
@@ -83,7 +83,7 @@
   }
   
   .trackAuthor {
-    width: 200px;
+    /* width: 200px; */
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
