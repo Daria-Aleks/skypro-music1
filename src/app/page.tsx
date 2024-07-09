@@ -36,10 +36,6 @@ export default function Home() {
     fetchTracks();
   }, []);
 
-  const uniqueAuthors = Array.from(new Set(tracks.map(track => track.author)));
-  const uniqueYears = Array.from(new Set(tracks.map(track => new Date(track.release_date).getFullYear())));
-  const uniqueGenres = Array.from(new Set(tracks.map(track => track.genre)));
-
   return (
     <>
     <div className={styles.wrapper}>
