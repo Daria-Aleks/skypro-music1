@@ -1,20 +1,22 @@
 import styles from './PlaylistContent.module.css'
 import Track from "@/components/Track/Track";
 
-interface Track {
+interface Trackk {
   id: number;
   name: string;
   author: string;
   album: string;
-  duration: string;
+  duration_in_seconds: string;
   release_date: Date;
   genre: string;
+  track_file: string;
 }
 
 interface PlaylistContentProps {
-  tracks: Track[];
+  tracks: Trackk[];
+  setTrack: (track: Trackk) => void;
 }
-const PlaylistContent: React.FC<PlaylistContentProps>  = ({tracks}) => {
+const PlaylistContent: React.FC<PlaylistContentProps>  = ({tracks, setTrack}) => {
     return (
         <div className={styles.contentPlaylist}>
           <div className={styles.contentTitle}>
@@ -32,6 +34,7 @@ const PlaylistContent: React.FC<PlaylistContentProps>  = ({tracks}) => {
                 <Track 
                   key={index}
                   track={track}
+                  setTrack={setTrack}
                 />    
                 ))}
           </div>

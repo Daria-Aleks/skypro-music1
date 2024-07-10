@@ -1,47 +1,70 @@
 import styles from './Track.module.css';
 import React from 'react';
+interface Track {
+  id: number;
+  name: string;
+  author: string;
+  album: string;
+  duration_in_seconds: string;
+  release_date: Date;
+  genre: string;
+  track_file: string;
+}
+
 interface TrackProps {
   track: {
       id: number;
       name: string;
       author: string;
       album: string;
-      duration: string;
+      duration_in_seconds: string;
       release_date: Date;
       genre: string;
+      track_file: string;
   };
+  setTrack: (track: Track) => void;
 }
-const Track: React.FC<TrackProps> = ({track}) => {
+
+function formatDuration(seconds: string): string {
+  const totalSeconds = parseInt(seconds, 10);
+  const minutes = Math.floor(totalSeconds / 60);
+  const remainingSeconds = totalSeconds % 60;
+  const paddedSeconds = remainingSeconds < 10 ? remainingSeconds : remainingSeconds.toString();
+  return `${minutes}:${paddedSeconds}`;
+}
+
+
+const Track: React.FC<TrackProps> = ({track, setTrack}) => {
     return (
-        <div className={styles.playlistItem}>
-        <div className={styles.playlistTrack}>
+        <div className={styles.playlistItem} onClick={() => setTrack(track)}>
+        <div className={styles.playlistTrack} >
           <div className={styles.trackTitle}>
             <div className={styles.trackTitleImage}>
-              <svg className={styles.trackTitleSvg}>
+              <svg className={styles.trackTitleSvg} >
                 <use xlinkHref="img/icon/sprite.svg#icon-note" />
               </svg>
             </div>
-            <div>
-              <a className={styles.trackTitleLink} href="http://">
+            <div >
+              <p className={styles.trackTitleLink} >
                 {track.name} <span className="track__title-span" />
-              </a>
+              </p>
             </div>
           </div>
           <div className={styles.trackTitleSpan}>
-            <a className="track__author-link" href="http://">
+            <p className="track__author-link" >
               {track.author}
-            </a>
+            </p>
           </div>
-          <div className={styles.trackAuthor}>
-            <a className={styles.trackAuthorLink} href="http://">
+          <div className={styles.trackAuthor} >
+            <p className={styles.trackAuthorLink} >
               {track.album}
-            </a>
+            </p>
           </div>
-          <div>
-            <svg className={styles.trackTimeSvg}>
+          <div >
+            <svg className={styles.trackTimeSvg} >
               <use xlinkHref="img/icon/sprite.svg#icon-like" />
             </svg>
-            <span className={styles.trackTimeText}>{track.duration}</span>
+            <span className={styles.trackTimeText} >{formatDuration(track.duration_in_seconds)}</span>
           </div>
         </div>
       </div>
