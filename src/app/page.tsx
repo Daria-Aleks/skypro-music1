@@ -5,16 +5,13 @@ import { useState, useEffect } from "react";
 import styles from './page.module.css'
 import Nav from "@/components/Nav/Nav";
 import CenterBlock from "@/components/CetnerBlock/CenterBlock";
+import useSWR from 'swr'
+const todosEndpoint = "https://skypro-music-api.skyeng.tech/catalog/track/all/";
 
-async function getData() {
-  const res = await  fetch("https://skypro-music-api.skyeng.tech/catalog/track/all/")
- 
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
- 
-  return res.json()
-}
+const getData = async () => {
+  const response = await fetch(todosEndpoint);
+  return await response.json();
+};
 
 interface Track {
   id: number;
@@ -26,12 +23,14 @@ interface Track {
   genre: string;
   track_file: string;
 }
-export default async function Home() {
+export default function Home() {
   // const [tracks, setTracks] = useState<Track[]>([]);
   const [activeTrack, setActiveTrack] = useState<Track | null>(null);
 
-  const data = await getData();
-
+  const { data, error,  isLoading} = useSWR(todosEndpoint, getData); 
+  if (error) return <div>ошибка загрузки</div>
+  if (isLoading) return <div>загрузка...</div>
+  console.log(data)
   const setTrack = (track: Track) => {
     setActiveTrack(track);
   };
