@@ -35,6 +35,7 @@ function formatDuration(seconds: string): string {
 
 
 const Track: React.FC<TrackProps> = ({track, setTrack}) => {
+  console.log(track)
     return (
         <div className={styles.playlistItem} onClick={() => setTrack(track)}>
         <div className={styles.playlistTrack} >

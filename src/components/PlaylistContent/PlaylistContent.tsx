@@ -1,5 +1,6 @@
 import styles from './PlaylistContent.module.css'
 import Track from "@/components/Track/Track";
+import { useAppSelector } from "../../store/store";
 
 interface Trackk {
   id: number;
@@ -16,7 +17,8 @@ interface PlaylistContentProps {
   tracks: Trackk[];
   setTrack: (track: Trackk) => void;
 }
-const PlaylistContent: React.FC<PlaylistContentProps>  = ({tracks, setTrack}) => {
+const PlaylistContent: React.FC<PlaylistContentProps>  = ({setTrack}) => {
+  const TracksState = useAppSelector((state) => state.auth.tracksState);
     return (
         <div className={styles.contentPlaylist}>
           <div className={styles.contentTitle}>
@@ -30,7 +32,7 @@ const PlaylistContent: React.FC<PlaylistContentProps>  = ({tracks, setTrack}) =>
             </div>
           </div>
           <div className={styles.contentPlaylist}>
-          {tracks?.map((track, index) => (
+          {TracksState?.map((track, index) => (
                 <Track 
                   key={index}
                   track={track}

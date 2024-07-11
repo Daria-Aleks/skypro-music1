@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import styles from './page.module.css'
 import Nav from "@/components/Nav/Nav";
 import CenterBlock from "@/components/CetnerBlock/CenterBlock";
+import { setTracksState } from "../store/features/traksSlice";
+import { useAppDispatch } from "../store/store";
 
 async function getData() {
   const res = await  fetch("https://skypro-music-api.skyeng.tech/catalog/track/all/")
@@ -28,10 +30,11 @@ interface Track {
 }
 export default async function Home() {
   // const [tracks, setTracks] = useState<Track[]>([]);
+  const dispatch = useAppDispatch();
   const [activeTrack, setActiveTrack] = useState<Track | null>(null);
 
   const data = await getData();
-
+  dispatch(setTracksState(data))
   const setTrack = (track: Track) => {
     setActiveTrack(track);
   };
