@@ -3,10 +3,12 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 import styles from './Bar.module.css';
 import cn from 'classnames';
 import { useAppSelector, useAppDispatch } from "../../store/store";
-import { setPauseState } from "../../store/features/traksSlice";
-
+import { setTrackState, setPauseState} from "../../store/features/traksSlice";
+import Track from '../Track/Track';
 const Bar = () => {
   const track = useAppSelector((state) => state.auth.trackState);
+  const tracks = useAppSelector((state) => state.auth.tracksState);
+  const [shuffleTracks, setShuffleTracks] = useState(false)
   const [currentTime, setCurrentTime] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -55,11 +57,54 @@ const Bar = () => {
     }
   }, [volume]);
 
+  useEffect(() => {
+    if (currentTime == duration) {
+      const id = track?.id;
+      tracks.forEach((el: Track, index: number) => {
+        if (el.id == id && tracks[index + 1]) {
+          dispatch(setTrackState(tracks[index + 1]))
+        } 
+      });
+
+    }
+  }, [currentTime]);
+
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseFloat(e.target.value);
     setVolume(newValue);
   };
 
+  const shuffle = () => {
+    setShuffleTracks((prev) => !prev)
+  };
+
+  const nextTrack = () => {
+    const id = track?.id
+    if (!shuffleTracks) {
+      tracks.forEach((el: Track, index: number) => {
+        if (el.id == id && tracks[index + 1]) {
+          dispatch(setTrackState(tracks[index + 1]))
+        } 
+      });
+    } else {
+      const index = Math.floor(Math.random() * tracks.length)
+      dispatch(setTrackState(tracks[index]))
+    }
+  };
+
+  const prevTrack = () => {
+    const id = track?.id;
+    if (!shuffleTracks) {
+      tracks.forEach((el: Track, index: number) => {
+        if (el.id == id && tracks[index - 1]) {
+          dispatch(setTrackState(tracks[index - 1]))
+        } 
+      });
+    } else {
+      const index = Math.floor(Math.random() * tracks.length)
+      dispatch(setTrackState(tracks[index]))
+    }
+  };
 
     return (
         <div className={styles.bar}>
@@ -73,7 +118,7 @@ const Bar = () => {
             <div className={styles.barPlayerBlock}>
               <div className={styles.barPlayer}>
                 <div className={styles.playerControls}>
-                  <div className={styles.playerBtnPrev} onClick={() => alert('Еще не реализовано')}>
+                  <div className={styles.playerBtnPrev} onClick={prevTrack}>
                     <svg className={styles.playerBtnPrevSvg}>
                       <use xlinkHref="img/icon/sprite.svg#icon-prev" />
                     </svg>
@@ -91,9 +136,9 @@ const Bar = () => {
                   </svg>
                   }
                   </div>
-                  <div className={styles.playerBtnNext} onClick={() => alert('Еще не реализовано')}>
+                  <div className={styles.playerBtnNext} onClick={nextTrack}>
                     <svg className={styles.playerBtnNextSvg}>
-                      <use xlinkHref="img/icon/sprite.svg#icon-next" />
+                      <use xlinkHref="img/icon/sprite.svg#icon-next"/>
                     </svg>
                   </div>
                   <div className={cn(styles.playerBtnRepeat, rep ? styles.active : '')} onClick={repeat}>
@@ -101,7 +146,7 @@ const Bar = () => {
                       <use xlinkHref="img/icon/sprite.svg#icon-repeat" />
                     </svg>
                   </div>
-                  <div  className={styles.playerBtnShuffle} onClick={() => alert('Еще не реализовано')}>
+                  <div  className={cn(styles.playerBtnShuffle, shuffleTracks ? styles.active : '')} onClick={shuffle}>
                     <svg  className={styles.playerBtnShuffleSvg}>
                       <use xlinkHref="img/icon/sprite.svg#icon-shuffle" />
                     </svg>

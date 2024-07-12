@@ -1,7 +1,6 @@
 "use client"
 import Sidebar from "@/components/Sidebar/Sidebar";
 import Bar from "@/components/Bar/Bar";
-import { useState, useEffect } from "react";
 import styles from './page.module.css'
 import Nav from "@/components/Nav/Nav";
 import CenterBlock from "@/components/CetnerBlock/CenterBlock";
@@ -15,16 +14,6 @@ const getData = async () => {
   return await response.json();
 };
 
-interface Track {
-  id: number;
-  name: string;
-  author: string;
-  album: string;
-  duration_in_seconds: string;
-  release_date: Date;
-  genre: string;
-  track_file: string;
-}
 export default function Home() {
   const dispatch = useAppDispatch();
   const { data, error,  isLoading} = useSWR(todosEndpoint, getData); 

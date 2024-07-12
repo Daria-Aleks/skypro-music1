@@ -2,16 +2,8 @@ import styles from './Filter.module.css';
 import { useState } from 'react';
 import FilterDate from '../FilterDate/FilterDate'
 import cn from 'classnames';
-interface Track {
-  id: number;
-  name: string;
-  author: string;
-  album: string;
-  duration_in_seconds: string;
-  release_date: Date;
-  genre: string;
-  track_file: string;
-}
+import Track from '../trackType'
+
 interface FilterProps {
 tracks: Track[];
 }

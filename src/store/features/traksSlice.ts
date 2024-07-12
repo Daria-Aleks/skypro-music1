@@ -39,5 +39,5 @@ const tracksSlice = createSlice({
   },
 });
 
-export const { setTracksState, setTrackState, setPauseState } = tracksSlice.actions; // Добавлен экспорт setTrackState
+export const { setTracksState, setTrackState, setPauseState } = tracksSlice.actions;
 export const tracksReducer = tracksSlice.reducer;

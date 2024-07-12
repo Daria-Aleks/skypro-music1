@@ -2,11 +2,12 @@ import React from 'react';
 import styles from './FilterDate.module.css';
 
 interface FilterDateProps {
-    date: any[];
+    date: [];
     offset: number;
   }
 
 const FilterDate: React.FC<FilterDateProps> = ({date, offset}) => {
+  console.log(date)
   const wrapperStyle = {
     left:` ${offset}px`,
   };
