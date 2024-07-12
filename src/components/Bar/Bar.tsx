@@ -2,36 +2,27 @@ import { useEffect, useRef, useState } from 'react';
 import ProgressBar from "../ProgressBar/ProgressBar";
 import styles from './Bar.module.css';
 import cn from 'classnames';
+import { useAppSelector, useAppDispatch } from "../../store/store";
+import { setPauseState } from "../../store/features/traksSlice";
 
-interface Track {
-  id: number;
-  name: string;
-  author: string;
-  album: string;
-  duration_in_seconds: string;
-  release_date: Date;
-  genre: string;
-  track_file: string;
-}
-interface BarProps {
-  track: Track | null;
-}
-
-const Bar: React.FC<BarProps>= ({track}) => {
-
+const Bar = () => {
+  const track = useAppSelector((state) => state.auth.trackState);
   const [currentTime, setCurrentTime] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [rep, setRep] = useState<boolean>(false)
   const [volume, setVolume] = useState(50);
   const duration = audioRef.current?.duration ?? 0;
+  const dispatch = useAppDispatch();
 
   const togglePlay = () => {
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
+        dispatch(setPauseState(true))
       } else{
         audioRef.current.play();
+        dispatch(setPauseState(false))
       }
       setIsPlaying((prev) => !prev);
     }
@@ -54,6 +45,7 @@ const Bar: React.FC<BarProps>= ({track}) => {
     if (audioRef.current && track) {
       audioRef.current.play();
       setIsPlaying(true)
+      dispatch(setPauseState(false))
     }
   }, [track]);
 
@@ -64,7 +56,7 @@ const Bar: React.FC<BarProps>= ({track}) => {
   }, [volume]);
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = parseFloat(e.target.value); // Преобразуем строку в число
+    const newValue = parseFloat(e.target.value);
     setVolume(newValue);
   };
 
@@ -72,7 +64,6 @@ const Bar: React.FC<BarProps>= ({track}) => {
     return (
         <div className={styles.bar}>
           <div className={styles.barContent}>
-            {/* <div className={styles.barPlayerProgress} /> */}
             <ProgressBar
               max={isNaN(duration) ? '0' : duration.toString()}
               value={currentTime}

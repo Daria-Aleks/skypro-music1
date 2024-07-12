@@ -129,3 +129,33 @@
     text-align: right;
     color: #696969;
   }
+
+  .activeTrack {
+    width: 15px;
+    height: 15px;
+    background: #b672ff;
+    border-radius: 50%;
+  }
+
+  @keyframes blink {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .activeTrack {
+    width: 15px;
+    height: 15px;
+    background: #b672ff;
+    border-radius: 50%;
+  }
+
+  .blink {
+    animation: blink 1s infinite;
+  }

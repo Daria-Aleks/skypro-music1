@@ -1,5 +1,8 @@
 import styles from './Track.module.css';
 import React from 'react';
+import { setTrackState } from "../../store/features/traksSlice";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import cn from 'classnames';
 interface Track {
   id: number;
   name: string;
@@ -22,7 +25,6 @@ interface TrackProps {
       genre: string;
       track_file: string;
   };
-  setTrack: (track: Track) => void;
 }
 
 function formatDuration(seconds: string): string {
@@ -33,12 +35,17 @@ function formatDuration(seconds: string): string {
   return `${minutes}:${paddedSeconds}`;
 }
 
+const Track: React.FC<TrackProps> = ({track}) => {
+  const dispatch = useAppDispatch();
+  const trackState = useAppSelector((state) => state.auth.trackState);
+  const pause = useAppSelector((state) => state.auth.pauseState);
 
-const Track: React.FC<TrackProps> = ({track, setTrack}) => {
-  console.log(track)
     return (
-        <div className={styles.playlistItem} onClick={() => setTrack(track)}>
-        <div className={styles.playlistTrack} >
+        <div className={styles.playlistItem} onClick={() => dispatch(setTrackState(track))}>
+        <div className={styles.playlistTrack}>
+          {
+            track?.id == trackState?.id ? <div className={cn(styles.activeTrack, pause ? '' : styles.blink)}></div> : ''
+          }
           <div className={styles.trackTitle}>
             <div className={styles.trackTitleImage}>
               <svg className={styles.trackTitleSvg} >

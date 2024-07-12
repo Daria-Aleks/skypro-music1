@@ -7,16 +7,13 @@ import Nav from "@/components/Nav/Nav";
 import CenterBlock from "@/components/CetnerBlock/CenterBlock";
 import { setTracksState } from "../store/features/traksSlice";
 import { useAppDispatch } from "../store/store";
+import useSWR from 'swr'
+const todosEndpoint = "https://skypro-music-api.skyeng.tech/catalog/track/all/";
 
-async function getData() {
-  const res = await  fetch("https://skypro-music-api.skyeng.tech/catalog/track/all/")
- 
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
- 
-  return res.json()
-}
+const getData = async () => {
+  const response = await fetch(todosEndpoint);
+  return await response.json();
+};
 
 interface Track {
   id: number;
@@ -28,30 +25,22 @@ interface Track {
   genre: string;
   track_file: string;
 }
-export default async function Home() {
-  // const [tracks, setTracks] = useState<Track[]>([]);
+export default function Home() {
   const dispatch = useAppDispatch();
-  const [activeTrack, setActiveTrack] = useState<Track | null>(null);
-
-  const data = await getData();
+  const { data, error,  isLoading} = useSWR(todosEndpoint, getData); 
+  if (error) return <div>ошибка загрузки</div>
+  if (isLoading) return <div>загрузка...</div>
   dispatch(setTracksState(data))
-  const setTrack = (track: Track) => {
-    setActiveTrack(track);
-  };
-  // useEffect(() => {
-  //   const data = await getData()
-  // }, []);
-
   return (
     <>
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <main className={styles.main}>
           <Nav/>
-          <CenterBlock tracks={data} setTrack={setTrack}/>
+          <CenterBlock tracks={data}/>
           <Sidebar/>
         </main>
-        <Bar track={activeTrack}/>
+        <Bar />
       </div>
     </div>
   </>

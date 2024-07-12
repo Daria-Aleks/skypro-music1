@@ -13,10 +13,14 @@ interface Track {
 
 type TracksStateType = {
   tracksState: Track[];
+  trackState: Track | null;
+  pauseState: boolean;
 };
 
 const initialState: TracksStateType = {
   tracksState: [],
+  trackState: null,
+  pauseState: true,
 };
 
 const tracksSlice = createSlice({
@@ -26,8 +30,14 @@ const tracksSlice = createSlice({
     setTracksState: (state, action: PayloadAction<Track[]>) => {
       state.tracksState = action.payload;
     },
+    setTrackState: (state, action: PayloadAction<Track>) => {
+      state.trackState = action.payload;
+    },
+    setPauseState: (state, action: PayloadAction<boolean>) => {
+      state.pauseState = action.payload
+    },
   },
 });
 
-export const { setTracksState } = tracksSlice.actions;
+export const { setTracksState, setTrackState, setPauseState } = tracksSlice.actions; // Добавлен экспорт setTrackState
 export const tracksReducer = tracksSlice.reducer;

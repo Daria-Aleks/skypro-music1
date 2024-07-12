@@ -15,15 +15,14 @@ interface Track {
 }
 interface CenterBlockProps {
   tracks: Track[];
-  setTrack: (track: Track) => void;
 }
-const CenterBlock: React.FC<CenterBlockProps> = ({tracks, setTrack}) => {
+const CenterBlock: React.FC<CenterBlockProps> = ({tracks}) => {
     return (
         <div className={styles.mainCenterblock}>
         <Search/>
         <h2 className={styles.centerblockH2}>Треки</h2>
         <Filter tracks={tracks}/>
-        <PlaylistContent tracks={tracks} setTrack={setTrack}/>
+        <PlaylistContent tracks={tracks}/>
       </div>
     )
 }
