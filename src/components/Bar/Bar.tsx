@@ -10,10 +10,10 @@ interface Track {
   track_file: string;
 }
 interface BarProps {
-  track: Track | null;
+  
 }
 
-const Bar: React.FC<BarProps>= ({track}) => {
+const Bar: React.FC<BarProps>= () => {
     return (
         <div className={styles.bar}>
           <div className={styles.barContent}>

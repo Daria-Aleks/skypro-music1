@@ -14,9 +14,8 @@ interface Trackk {
 
 interface PlaylistContentProps {
   tracks: Trackk[];
-  setTrack: (track: Trackk) => void;
 }
-const PlaylistContent: React.FC<PlaylistContentProps>  = ({tracks, setTrack}) => {
+const PlaylistContent: React.FC<PlaylistContentProps>  = ({tracks}) => {
     return (
         <div className={styles.contentPlaylist}>
           <div className={styles.contentTitle}>
@@ -34,7 +33,6 @@ const PlaylistContent: React.FC<PlaylistContentProps>  = ({tracks, setTrack}) =>
                 <Track 
                   key={index}
                   track={track}
-                  setTrack={setTrack}
                 />    
                 ))}
           </div>

@@ -1,3 +1,4 @@
+"use client"
 import styles from './Nav.module.css'
 import Image from "next/image";
 import Menu from "@/components/Menu/Menu";

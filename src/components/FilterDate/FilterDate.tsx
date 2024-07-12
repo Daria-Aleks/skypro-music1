@@ -10,7 +10,6 @@ const FilterDate: React.FC<FilterDateProps> = ({date, offset}) => {
   const wrapperStyle = {
     left:` ${offset}px`,
   };
-  console.log(wrapperStyle)
     return (
        <div className={styles.wrapper} style={wrapperStyle}>
         {date.map(col => (
