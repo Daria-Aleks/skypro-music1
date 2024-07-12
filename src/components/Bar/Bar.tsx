@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import ProgressBar from "../ProgressBar/ProgressBar";
 import styles from './Bar.module.css';
 import cn from 'classnames';
-import Track from '../trackType'
+import Track from '../../app/trackType'
 
 interface BarProps {
   track: Track | null;

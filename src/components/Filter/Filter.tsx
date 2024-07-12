@@ -2,7 +2,7 @@ import styles from './Filter.module.css';
 import { useState } from 'react';
 import FilterDate from '../FilterDate/FilterDate'
 import cn from 'classnames';
-import Track from '../trackType'
+import Track from '../../app/trackType'
 
 interface FilterProps {
 tracks: Track[];

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import styles from './page.module.css'
 import Nav from "@/components/Nav/Nav";
 import CenterBlock from "@/components/CetnerBlock/CenterBlock";
-import Track from '../components/trackType'
+import Track from './trackType'
 import useSWR from 'swr'
 const todosEndpoint = "https://skypro-music-api.skyeng.tech/catalog/track/all/";
 

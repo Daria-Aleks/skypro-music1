@@ -7,7 +7,6 @@ interface FilterDateProps {
   }
 
 const FilterDate: React.FC<FilterDateProps> = ({date, offset}) => {
-  console.log(date)
   const wrapperStyle = {
     left:` ${offset}px`,
   };

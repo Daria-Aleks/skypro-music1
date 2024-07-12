@@ -2,7 +2,7 @@ import PlaylistContent from '../PlaylistContent/PlaylistContent';
 import Search from '../Search/Search';
 import Filter from '../Filter/Filter';
 import styles from './CenterBlock.module.css'
-import Track from '../trackType'
+import Track from '../../app/trackType'
 
 interface CenterBlockProps {
   tracks: Track[];

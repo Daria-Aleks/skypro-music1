@@ -1,6 +1,6 @@
 import styles from './Track.module.css';
 import React from 'react';
-import Trackk from '../trackType'
+import Trackk from '../../app/trackType'
 
 interface TrackProps {
   track: {
