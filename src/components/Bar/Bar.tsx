@@ -1,5 +1,19 @@
 import styles from './Bar.module.css'
-const Bar = () => {
+interface Track {
+  id: number;
+  name: string;
+  author: string;
+  album: string;
+  duration_in_seconds: string;
+  release_date: Date;
+  genre: string;
+  track_file: string;
+}
+interface BarProps {
+  
+}
+
+const Bar: React.FC<BarProps>= () => {
     return (
         <div className={styles.bar}>
           <div className={styles.barContent}>
@@ -41,9 +55,9 @@ const Bar = () => {
                       </svg>
                     </div>
                     <div className={styles.trackPlayAuthor}>
-                      <a href="http://" className={styles.trackPlayAuthorLink}>
+                      <p className={styles.trackPlayAuthorLink}>
                         Ты та...
-                      </a>
+                      </p>
                     </div>
                     <div className={styles.trackPlayAlbum}>
                       <a href="http://" className={styles.trackPlayAlbumLink}>
@@ -86,4 +100,5 @@ const Bar = () => {
         </div>
     )
 }
+//
 export default Bar;
