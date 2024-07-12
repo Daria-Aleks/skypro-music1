@@ -2,17 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import ProgressBar from "../ProgressBar/ProgressBar";
 import styles from './Bar.module.css';
 import cn from 'classnames';
+import Track from '../trackType'
 
-interface Track {
-  id: number;
-  name: string;
-  author: string;
-  album: string;
-  duration_in_seconds: string;
-  release_date: Date;
-  genre: string;
-  track_file: string;
-}
 interface BarProps {
   track: Track | null;
 }

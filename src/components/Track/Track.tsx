@@ -1,15 +1,6 @@
 import styles from './Track.module.css';
 import React from 'react';
-interface Track {
-  id: number;
-  name: string;
-  author: string;
-  album: string;
-  duration_in_seconds: string;
-  release_date: Date;
-  genre: string;
-  track_file: string;
-}
+import Trackk from '../trackType'
 
 interface TrackProps {
   track: {
@@ -22,7 +13,7 @@ interface TrackProps {
       genre: string;
       track_file: string;
   };
-  setTrack: (track: Track) => void;
+  setTrack: (track: Trackk) => void;
 }
 
 function formatDuration(seconds: string): string {

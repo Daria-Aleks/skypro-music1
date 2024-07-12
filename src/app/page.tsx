@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import styles from './page.module.css'
 import Nav from "@/components/Nav/Nav";
 import CenterBlock from "@/components/CetnerBlock/CenterBlock";
+import Track from '../components/trackType'
 import useSWR from 'swr'
 const todosEndpoint = "https://skypro-music-api.skyeng.tech/catalog/track/all/";
 
@@ -13,16 +14,6 @@ const getData = async () => {
   return await response.json();
 };
 
-interface Track {
-  id: number;
-  name: string;
-  author: string;
-  album: string;
-  duration_in_seconds: string;
-  release_date: Date;
-  genre: string;
-  track_file: string;
-}
 export default function Home() {
   // const [tracks, setTracks] = useState<Track[]>([]);
   const [activeTrack, setActiveTrack] = useState<Track | null>(null);
