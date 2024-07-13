@@ -43,11 +43,12 @@ const Track: React.FC<TrackProps> = ({track}) => {
     return (
         <div className={styles.playlistItem} onClick={() => dispatch(setTrackState(track))}>
         <div className={styles.playlistTrack}>
-          {
-            track?.id == trackState?.id ? <div className={cn(styles.activeTrack, pause ? '' : styles.blink)}></div> : ''
-          }
+
           <div className={styles.trackTitle}>
             <div className={styles.trackTitleImage}>
+            {
+              track?.id == trackState?.id ? <div className={cn(styles.activeTrack, pause ? '' : styles.blink)}></div> : ''
+            }
               <svg className={styles.trackTitleSvg} >
                 <use xlinkHref="img/icon/sprite.svg#icon-note" />
               </svg>
