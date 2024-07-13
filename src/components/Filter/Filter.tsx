@@ -6,7 +6,10 @@ import classNames from 'classnames';
 import Track from '../trackType'
 
 interface FilterProps {
-tracks: Track[];
+  tracks: Track[];
+}
+function uniqueArray(tracks: Track[], key: keyof Track): string[] {
+  return Array.from(new Set(tracks.map(track => track[key] as string)));
 }
 const Filter: React.FC<FilterProps> = ({tracks}) => {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
