@@ -1,3 +1,4 @@
+"use client"
 import { useEffect, useRef, useState } from 'react';
 import ProgressBar from "../ProgressBar/ProgressBar";
 import styles from './Bar.module.css';
