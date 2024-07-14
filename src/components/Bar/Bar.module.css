@@ -298,3 +298,7 @@
   .volumeProgressLine {
     width: 109px;
   }
+
+  .active svg {
+    stroke: white;
+  }
