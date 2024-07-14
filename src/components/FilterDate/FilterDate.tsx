@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './FilterDate.module.css';
 
 interface FilterDateProps {
-    date: [];
+    date: string[];
     offset: number;
   }
 
