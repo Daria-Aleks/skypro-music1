@@ -1,0 +1,14 @@
+.wrapper {
+    position: absolute;
+    max-height: 305px;
+    background: #313131;
+    z-index: 100;
+    padding: 20px 20px 0 20px;
+    border-radius: 10px;
+    overflow: auto;
+    top: 290px
+}
+
+.link {
+    margin-bottom: 15px;
+}
