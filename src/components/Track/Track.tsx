@@ -67,7 +67,7 @@ const Track: React.FC<TrackProps> = ({track}) => {
       })
       setIsLiked(fl)
     }
-  }, [allFavs]);
+  }, [track, allFavs]);
 
   const likeTrack = async (event: React.FormEvent) => {
     event.preventDefault();

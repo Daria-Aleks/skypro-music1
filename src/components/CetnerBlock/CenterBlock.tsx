@@ -6,13 +6,13 @@ import styles from './CenterBlock.module.css'
 import Track from '../trackType'
 import { setTracksState } from "../../store/features/traksSlice";
 import { setAuth, setUser, setUserTokens } from "../../store/features/authSlice";
-import { useAppDispatch } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 import { useEffect } from 'react';
-import getRefreshToken from '@/app/getRefreshToken';
 interface CenterBlockProps {
   tracks: Track[];
 }
 const CenterBlock: React.FC<CenterBlockProps> = ({tracks}) => {
+  const allFavs = useAppSelector((state) => state.tracksSlice.allFavs);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -30,7 +30,9 @@ const CenterBlock: React.FC<CenterBlockProps> = ({tracks}) => {
     }
 
   }, []);
-  dispatch(setTracksState(tracks))
+  useEffect(() => {
+    dispatch(setTracksState(tracks))
+  }, [allFavs]);
 
     return (
         <div className={styles.mainCenterblock}>
