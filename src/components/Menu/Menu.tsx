@@ -1,5 +1,6 @@
 import styles from './Menu.module.css'
 import React from 'react';
+import Link from 'next/link';
 
 interface MenuProps {
     showMenu: boolean;
@@ -12,19 +13,17 @@ const Menu: React.FC<MenuProps> = ({ showMenu }) => {
         <div className={styles.navMenu}> 
         <ul className={styles.menuList}>
           <li className={styles.menuItem}>
-            <a className={styles.menuLink}>
+            <Link href="/" className={styles.menuLink}>
               Главное
-            </a>
+            </Link>
           </li>
           <li className={styles.menuItem}>
-            <a href="#" className={styles.menuLink}>
+            <Link href="/favorites" className={styles.menuLink}>
               Мой плейлист
-            </a>
+            </Link>
           </li>
           <li className={styles.menuItem}>
-            <a href="../signin.html" className={styles.menuLink}>
-              Войти
-            </a>
+          <Link href="/signin" className={styles.menuLink}>Войти</Link>
           </li>
         </ul>
       </div> : <div></div>

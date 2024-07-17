@@ -1,14 +1,25 @@
+"use client"
 import Image from "next/image";
 import styles from './Sidebar.module.css'
+import { useAppSelector } from "../../store/store";
+import Link from 'next/link';
+import { useAppDispatch } from "../../store/store";
+import { clearUserSession} from "../../store/features/authSlice";
+
 const Sidebar = () => {
+  const dispatch = useAppDispatch();
+
+  const user = useAppSelector((state) => state.auth.userDate);
     return (
         <div className={styles.MainSidebar}>
         <div className={styles.sidebarPersonal}>
-          <p className={styles.sidebarPersonalName}>Sergey.Ivanov</p>
+          <p className={styles.sidebarPersonalName}>{user?.username}</p>
           <div className={styles.sidebarIcon}>
+          <Link href="/signin" onClick={() => dispatch(clearUserSession())}>
             <svg>
-              <use xlinkHref="img/icon/sprite.svg#logout" />
-            </svg>
+                <use xlinkHref="img/icon/sprite.svg#logout" />
+              </svg>
+          </Link>
           </div>
         </div>
         <div className={styles.sidebarBlock}>

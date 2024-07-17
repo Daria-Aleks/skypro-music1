@@ -4,17 +4,44 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 import styles from './Bar.module.css';
 import cn from 'classnames';
 import { useAppSelector, useAppDispatch } from "../../store/store";
-import { setTrackState, setPauseState} from "../../store/features/traksSlice";
+import { setTrackState, setPauseState, setAllFavs} from "../../store/features/traksSlice";
 import Track from '../Track/Track';
+import getRefreshToken from '@/app/getRefreshToken';
+import getFavTracks from '@/app/getFavTracks';
+
+interface User {
+  id: number;
+  first_name: string;
+  email: string;
+  last_name: string;
+  username: string;
+}
+
+interface TrackK {
+  id: number;
+  name: string;
+  author: string;
+  album: string;
+  duration_in_seconds: string;
+  release_date: Date;
+  genre: string;
+  track_file: string;
+  stared_user: User[]
+}
+
 const Bar = () => {
-  const track = useAppSelector((state) => state.auth.trackState);
-  const tracks = useAppSelector((state) => state.auth.tracksState);
-  const [shuffleTracks, setShuffleTracks] = useState(false)
+  const track = useAppSelector((state) => state.tracksSlice.trackState);
+  const tracks = useAppSelector((state) => state.tracksSlice.tracksState);
+  const allFavTracks = useAppSelector((state) => state.tracksSlice.allFavs);
+  const user = useAppSelector((state) => state.auth.userDate);
+  const [shuffleTracks, setShuffleTracks] = useState(false);
+  const [isLiked, setIsLiked] = useState(false)
   const [currentTime, setCurrentTime] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [rep, setRep] = useState<boolean>(false)
   const [volume, setVolume] = useState(50);
+  const token = useAppSelector((state) => state.auth.userTokenRefresh);
   const duration = audioRef.current?.duration ?? 0;
   const dispatch = useAppDispatch();
 
@@ -49,6 +76,26 @@ const Bar = () => {
       audioRef.current.play();
       setIsPlaying(true)
       dispatch(setPauseState(false))
+    }
+  }, [track]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      getAllFavTracks()
+    }
+  }, []);
+
+  useEffect(() => {
+    if (track) {
+      let fl = false
+      console.log(allFavTracks)
+      allFavTracks.forEach(el => {
+        if (el.id == track?.id) {
+          fl = true
+        }
+      })
+      setIsLiked(fl)
     }
   }, [track]);
 
@@ -104,6 +151,46 @@ const Bar = () => {
     } else {
       const index = Math.floor(Math.random() * tracks.length)
       dispatch(setTrackState(tracks[index]))
+    }
+  };
+
+  const likeTrack = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const accessToken = await getRefreshToken(token);
+    try {
+      const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${track.id}/favorite/`, {
+        method: isLiked ? "DELETE" : "POST",
+        body: JSON.stringify({
+          email: user?.email,
+          password: user?.password,
+        }),
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${accessToken.access}`,
+        },
+      });
+
+      if (response.status == 200) {
+        setIsLiked(!isLiked)
+        const json = await response.json();
+        console.log(json)
+        getAllFavTracks()
+      } else {
+        alert('Введенные данные неверны')
+      }
+    } catch (error) {
+      console.error('Ошибка:', error);
+    }
+  };
+
+  const getAllFavTracks = async () => {
+    const token = localStorage.getItem('token');
+    const accessToken = await getRefreshToken(JSON.parse(token).refresh);
+    try {
+      const tracks: TrackK[] = await getFavTracks(accessToken.access)
+      dispatch(setAllFavs(tracks))
+    } catch (error) {
+      console.error('Ошибка:', error);
     }
   };
 
@@ -172,8 +259,8 @@ const Bar = () => {
                     </div>
                   </div>
                   <div className={styles.trackPlayLikeDis}>
-                    <div className={styles.trackPlayLike}>
-                      <svg className={styles.trackPlayLikeSvg}>
+                    <div className={styles.trackPlayLike} onClick={likeTrack}>
+                      <svg className={cn(styles.trackPlayLikeSvg, isLiked? styles.liked : '')}>
                         <use xlinkHref="img/icon/sprite.svg#icon-like" />
                       </svg>
                     </div>

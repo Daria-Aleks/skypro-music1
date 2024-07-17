@@ -1,8 +1,19 @@
 import styles from './Track.module.css';
-import React from 'react';
-import { setTrackState } from "../../store/features/traksSlice";
-import { useAppDispatch, useAppSelector } from "../../store/store";
+import React, { useEffect, useState } from 'react';
+import { setAllFavs, setTrackState } from "../../store/features/traksSlice";
+import { useAppSelector, useAppDispatch } from "../../store/store";
 import cn from 'classnames';
+import getRefreshToken from '@/app/getRefreshToken';
+import getFavTracks from '@/app/getFavTracks';
+
+interface User {
+  id: number;
+  first_name: string;
+  email: string;
+  last_name: string;
+  username: string;
+}
+
 interface Track {
   id: number;
   name: string;
@@ -12,6 +23,7 @@ interface Track {
   release_date: Date;
   genre: string;
   track_file: string;
+  stared_user: User[]
 }
 
 interface TrackProps {
@@ -24,6 +36,7 @@ interface TrackProps {
       release_date: Date;
       genre: string;
       track_file: string;
+      stared_user: User[];
   };
 }
 
@@ -37,9 +50,63 @@ function formatDuration(seconds: string): string {
 
 const Track: React.FC<TrackProps> = ({track}) => {
   const dispatch = useAppDispatch();
-  const trackState = useAppSelector((state) => state.auth.trackState);
-  const pause = useAppSelector((state) => state.auth.pauseState);
+  const [isLiked, setIsLiked] = useState(false);
+  const user = useAppSelector((state) => state.auth.userDate);
+  const trackState = useAppSelector((state) => state.tracksSlice.trackState);
+  const pause = useAppSelector((state) => state.tracksSlice.pauseState);
+  const allFavs = useAppSelector((state) => state.tracksSlice.allFavs);
+  const token = useAppSelector((state) => state.auth.userTokenRefresh);
 
+  useEffect(() => {
+    if (track) {
+      let fl = false;
+      allFavs.forEach(el => {
+        if (el.id == track?.id) {
+          fl = true
+        }
+      })
+      setIsLiked(fl)
+    }
+  }, [allFavs]);
+
+  const likeTrack = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const accessToken = await getRefreshToken(token);
+    try {
+      const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${track.id}/favorite/`, {
+        method: isLiked ? "DELETE" : "POST",
+        body: JSON.stringify({
+          email: user?.email,
+          password: user?.password,
+        }),
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${accessToken.access}`,
+        },
+      });
+
+      if (response.status == 200) {
+        setIsLiked(!isLiked)
+        const json = await response.json();
+        console.log(json)
+        getAllFavTracks()
+      } else {
+        alert('Введенные данные неверны')
+      }
+    } catch (error) {
+      console.error('Ошибка:', error);
+    }
+  };
+  const getAllFavTracks = async () => {
+    const token = localStorage.getItem('token');
+    const accessToken = await getRefreshToken(JSON.parse(token).refresh);
+    try {
+      const tracks: Track[] = await getFavTracks(accessToken.access)
+      dispatch(setAllFavs(tracks))
+    } catch (error) {
+      console.error('Ошибка:', error);
+    }
+  };
     return (
         <div className={styles.playlistItem} onClick={() => dispatch(setTrackState(track))}>
         <div className={styles.playlistTrack}>
@@ -70,7 +137,7 @@ const Track: React.FC<TrackProps> = ({track}) => {
             </p>
           </div>
           <div >
-            <svg className={styles.trackTimeSvg} >
+            <svg className={cn(styles.trackTimeSvg, isLiked ? styles.liked : '')} onClick={likeTrack}>
               <use xlinkHref="img/icon/sprite.svg#icon-like" />
             </svg>
             <span className={styles.trackTimeText} >{formatDuration(track.duration_in_seconds)}</span>

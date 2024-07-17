@@ -143,13 +143,17 @@
   }
 
   .activeTrack {
-    width: 15px;
+    width: 110px;
     height: 15px;
     background: #b672ff;
     border-radius: 50%;
-    position: absolute;
+    margin-left: 2px;
   }
 
   .blink {
     animation: blink 1s infinite;
+  }
+
+  .liked {
+    fill: #b672ff
   }

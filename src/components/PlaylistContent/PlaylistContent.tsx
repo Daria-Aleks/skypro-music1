@@ -2,6 +2,14 @@ import styles from './PlaylistContent.module.css'
 import Track from "@/components/Track/Track";
 import { useAppSelector } from "../../store/store";
 
+interface User {
+  id: number;
+  first_name: string;
+  email: string;
+  last_name: string;
+  username: string;
+}
+
 interface Trackk {
   id: number;
   name: string;
@@ -11,13 +19,14 @@ interface Trackk {
   release_date: Date;
   genre: string;
   track_file: string;
+  stared_user: User[]
 }
 
 interface PlaylistContentProps {
   tracks: Trackk[];
 }
 const PlaylistContent: React.FC<PlaylistContentProps>  = () => {
-  const TracksState = useAppSelector((state) => state.auth.tracksState);
+  const TracksState = useAppSelector((state) => state.tracksSlice.tracksState);
     return (
         <div className={styles.contentPlaylist}>
           <div className={styles.contentTitle}>

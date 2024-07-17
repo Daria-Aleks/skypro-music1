@@ -302,3 +302,7 @@
   .active svg {
     stroke: white;
   }
+
+  .liked {
+    fill: #b672ff
+  }
