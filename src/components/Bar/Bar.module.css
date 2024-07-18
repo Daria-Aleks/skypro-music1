@@ -298,3 +298,11 @@
   .volumeProgressLine {
     width: 109px;
   }
+
+  .active svg {
+    stroke: white;
+  }
+
+  .liked {
+    fill: #b672ff
+  }
