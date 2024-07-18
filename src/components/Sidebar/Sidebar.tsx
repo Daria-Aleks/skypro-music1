@@ -25,18 +25,18 @@ const Sidebar = () => {
         <div className={styles.sidebarBlock}>
           <div className={styles.sidebarList}>
             <div className={styles.sidebarItem}>
-              <a className={styles.sidebarIink} href="#">
-                <Image
-                  className={styles.sidebarImg}
-                  src="/img/playlist01.png"
-                  alt="day's playlist"
-                  width={250}
-                  height={150}
-                />
-              </a>
+                <Link href="/dayplaylist" className={styles.sidebarIink}>
+                  <Image
+                    className={styles.sidebarImg}
+                    src="/img/playlist01.png"
+                    alt="day's playlist"
+                    width={250}
+                    height={150}
+                  />
+                </Link>
             </div>
             <div className={styles.sidebarItem}>
-              <a className="sidebar__link" href="#">
+              <Link className="sidebar__link" href="/dancehits">
                 <Image
                   className={styles.sidebarImg}
                   src="/img/playlist02.png"
@@ -44,10 +44,10 @@ const Sidebar = () => {
                   width={250}
                   height={150}
                 />
-              </a>
+              </Link>
             </div>
             <div className={styles.sidebarItem}>
-              <a className="sidebar__link" href="#">
+              <Link className="sidebar__link" href="/indie">
                 <Image
                   className={styles.sidebarImg}
                   src="/img/playlist03.png"
@@ -55,7 +55,7 @@ const Sidebar = () => {
                   width={250}
                   height={150}
                 />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

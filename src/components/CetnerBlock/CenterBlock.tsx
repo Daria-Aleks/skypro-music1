@@ -13,6 +13,9 @@ interface CenterBlockProps {
 }
 const CenterBlock: React.FC<CenterBlockProps> = ({tracks}) => {
   const allFavs = useAppSelector((state) => state.tracksSlice.allFavs);
+  const playListOfDay = useAppSelector((state) => state.tracksSlice.playListOfDay);
+  const danceHits = useAppSelector((state) => state.tracksSlice.danceHits);
+  const indieTracks = useAppSelector((state) => state.tracksSlice.indieTracks);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -32,7 +35,7 @@ const CenterBlock: React.FC<CenterBlockProps> = ({tracks}) => {
   }, []);
   useEffect(() => {
     dispatch(setTracksState(tracks))
-  }, [allFavs]);
+  }, [allFavs, playListOfDay, danceHits, indieTracks]);
 
     return (
         <div className={styles.mainCenterblock}>

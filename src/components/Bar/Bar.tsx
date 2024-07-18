@@ -4,7 +4,7 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 import styles from './Bar.module.css';
 import cn from 'classnames';
 import { useAppSelector, useAppDispatch } from "../../store/store";
-import { setTrackState, setPauseState, setAllFavs} from "../../store/features/traksSlice";
+import { setTrackState, setPauseState, setAllFavs, setCurrentTime, setDuration} from "../../store/features/traksSlice";
 import Track from '../Track/Track';
 import getRefreshToken from '@/app/getRefreshToken';
 import getFavTracks from '@/app/getFavTracks';
@@ -33,18 +33,17 @@ const Bar = () => {
   const track = useAppSelector((state) => state.tracksSlice.trackState);
   const tracks = useAppSelector((state) => state.tracksSlice.tracksState);
   const allFavTracks = useAppSelector((state) => state.tracksSlice.allFavs);
+  const currentTime = useAppSelector((state) => state.tracksSlice.currentTime);
   const user = useAppSelector((state) => state.auth.userDate);
   const [shuffleTracks, setShuffleTracks] = useState(false);
   const [isLiked, setIsLiked] = useState(false)
-  const [currentTime, setCurrentTime] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [rep, setRep] = useState<boolean>(false)
   const [volume, setVolume] = useState(50);
   const token = useAppSelector((state) => state.auth.userTokenRefresh);
-  const duration = audioRef.current?.duration ?? 0;
+  const duration = useAppSelector((state) => state.tracksSlice.duration);
   const dispatch = useAppDispatch();
-
   const togglePlay = () => {
     if (audioRef.current) {
       if (isPlaying) {
@@ -72,6 +71,10 @@ const Bar = () => {
   };
 
   useEffect(() => {
+    dispatch(setDuration(audioRef?.current?.duration ? audioRef?.current?.duration : 0))
+  }, [audioRef.current?.duration]);
+
+  useEffect(() => {
     if (audioRef.current && track) {
       audioRef.current.play();
       setIsPlaying(true)
@@ -89,7 +92,6 @@ const Bar = () => {
   useEffect(() => {
     if (track) {
       let fl = false
-      console.log(allFavTracks)
       allFavTracks.forEach(el => {
         if (el.id == track?.id) {
           fl = true
@@ -193,6 +195,12 @@ const Bar = () => {
       console.error('Ошибка:', error);
     }
   };
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      dispatch(setCurrentTime(audioRef.current.currentTime));
+    }
+  };
+
 
     return (
         <div className={styles.bar}>
@@ -290,9 +298,15 @@ const Bar = () => {
                     <audio
                         src={track?.track_file}
                         ref={audioRef}
-                        onTimeUpdate={(e) => {
-                          setCurrentTime(e.currentTarget.currentTime);
+                        onTimeUpdate={() => {
+                          handleTimeUpdate()
                         }}
+                        onLoadedMetadata={() => {
+                          if (audioRef.current) {
+                            audioRef.current.currentTime = currentTime;
+                          }
+                        }}
+              
                       />
                   </div>
                 </div>
@@ -302,5 +316,5 @@ const Bar = () => {
         </div>
     )
 }
-//
+
 export default Bar;
