@@ -1,5 +1,4 @@
 import Sidebar from "@/components/Sidebar/Sidebar";
-import Bar from "@/components/Bar/Bar";
 import styles from './page.module.css'
 import Nav from "@/components/Nav/Nav";
 import CenterBlock from "@/components/CetnerBlock/CenterBlock";
@@ -26,7 +25,6 @@ async function Home() {
           <CenterBlock tracks={data} />
           <Sidebar />
         </main>
-        <Bar />
       </div>
     </div>
   );

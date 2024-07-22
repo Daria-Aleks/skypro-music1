@@ -1,12 +1,11 @@
 "use client"
 import { useEffect } from 'react';
-import { setPlayListOfDay, setTracksState } from "../../store/features/traksSlice";
+import { setPlayListOfDay } from "../../store/features/traksSlice";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import Nav from '@/components/Nav/Nav';
 import CenterBlock from '@/components/CetnerBlock/CenterBlock';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import styles from '../page.module.css'
-import Bar from '@/components/Bar/Bar';
 import getSelections from '../getSelections';
 
 function dayPlayList() {
@@ -35,7 +34,6 @@ function dayPlayList() {
                     <CenterBlock tracks={playListOfDay} />
                     <Sidebar />
                 </main>
-                <Bar />
             </div>
         </div>
     </div>

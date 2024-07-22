@@ -1,12 +1,11 @@
 "use client"
 import { useEffect } from 'react';
-import { setDanceHits, setPlayListOfDay } from "../../store/features/traksSlice";
+import { setDanceHits } from "../../store/features/traksSlice";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import Nav from '@/components/Nav/Nav';
 import CenterBlock from '@/components/CetnerBlock/CenterBlock';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import styles from '../page.module.css'
-import Bar from '@/components/Bar/Bar';
 import getSelections from '../getSelections';
 
 function danceHits() {
@@ -35,7 +34,6 @@ function danceHits() {
                     <CenterBlock tracks={danceHits} />
                     <Sidebar />
                 </main>
-                <Bar />
             </div>
         </div>
     </div>

@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { setAllFavs } from "../../store/features/traksSlice";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import getFavTracks from '../getFavTracks';
@@ -8,7 +8,6 @@ import Nav from '@/components/Nav/Nav';
 import CenterBlock from '@/components/CetnerBlock/CenterBlock';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import styles from '../page.module.css'
-import Bar from '@/components/Bar/Bar';
 import { useRouter } from 'next/navigation';
 interface User {
     id: number;
@@ -65,7 +64,6 @@ function Favorites() {
                     <CenterBlock tracks={allFavs} />
                     <Sidebar />
                 </main>
-                <Bar />
             </div>
         </div>
     </div>

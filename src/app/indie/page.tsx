@@ -35,7 +35,7 @@ function indieTracks() {
                     <CenterBlock tracks={indieTracks} />
                     <Sidebar />
                 </main>
-                <Bar />
+                {/* <Bar /> */}
             </div>
         </div>
     </div>
