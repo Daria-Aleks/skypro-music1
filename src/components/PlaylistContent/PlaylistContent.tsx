@@ -33,15 +33,13 @@ const PlaylistContent: React.FC<PlaylistContentProps>  = () => {
   const years = useAppSelector((state) => state.search.years);
   const authors = useAppSelector((state) => state.search.authors);
 
-  const filteredTracks = useMemo(() => {
-    return TracksState?.filter((track) => {
-      const matchesSearchTerm = track.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesGenre = genres.length === 0 || genres.includes(track.genre);
-      const matchesAuthors = authors.length === 0 || authors.includes(track.author);
-      return matchesSearchTerm && matchesGenre && matchesAuthors;
-    });
-  }, [TracksState, searchTerm, genres, authors]);
 
+  const filteredTracks = TracksState?.filter((track) => {
+    const matchesSearchTerm = track.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesGenre = genres.length === 0 || genres.includes(track.genre);
+    const matchesAuthors = authors.length === 0 || authors.includes(track.author);
+    return matchesSearchTerm && matchesGenre && matchesAuthors;
+  });
 
 
   const sortedTracks = filteredTracks?.sort((a, b) => {

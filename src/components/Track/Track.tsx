@@ -1,5 +1,5 @@
 import styles from './Track.module.css';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { setAllFavs, setTrackState } from "../../store/features/traksSlice";
 import { useAppSelector, useAppDispatch } from "../../store/store";
 import cn from 'classnames';
@@ -97,16 +97,17 @@ const Track: React.FC<TrackProps> = ({track}) => {
       console.error('Ошибка:', error);
     }
   };
-  const getAllFavTracks = async () => {
+  const getAllFavTracks = useCallback(async () => {
     const token = localStorage.getItem('token');
     const accessToken = await getRefreshToken(JSON.parse(token).refresh);
     try {
-      const tracks: Track[] = await getFavTracks(accessToken.access)
-      dispatch(setAllFavs(tracks))
+      const tracks: Track[] = await getFavTracks(accessToken.access);
+      dispatch(setAllFavs(tracks));
     } catch (error) {
       console.error('Ошибка:', error);
     }
-  };
+  }, [dispatch]);
+
     return (
         <div className={styles.playlistItem} onClick={() => dispatch(setTrackState(track))}>
         <div className={styles.playlistTrack}>

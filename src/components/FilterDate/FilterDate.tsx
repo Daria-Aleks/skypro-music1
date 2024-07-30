@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styles from './FilterDate.module.css';
 import { useAppSelector, useAppDispatch } from '@/store/store';
 import { setAuthors, setGenre, setYears } from '@/store/features/searchSlice';
@@ -18,8 +18,7 @@ const FilterDate: React.FC<FilterDateProps> = ({date, offset, type}) => {
     left:` ${offset}px`,
   };
 
-
-  const searchFor = (col: string) => {
+  const searchFor = useCallback((col: string) => {
     switch (type) {
       case 'genre':
         if (genres.includes(col)) {
@@ -29,12 +28,12 @@ const FilterDate: React.FC<FilterDateProps> = ({date, offset, type}) => {
         }
         break;
       case 'years':
-        if (years == col) {
-          dispatch(setYears(''))
+        if (years === col) {
+          dispatch(setYears(''));
         } else {
-          dispatch(setYears(col))
+          dispatch(setYears(col));
         }
-      break; 
+        break;
       case 'authors':
         if (authors.includes(col)) {
           dispatch(setAuthors(authors.filter((el) => el !== col)));
@@ -45,7 +44,9 @@ const FilterDate: React.FC<FilterDateProps> = ({date, offset, type}) => {
       default:
         break;
     }
-  };
+  }, [type, genres, years, authors, dispatch]);
+
+
     return (
        <div className={styles.wrapper} style={wrapperStyle}>
         {date.map(col => (

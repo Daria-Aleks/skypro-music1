@@ -5,7 +5,6 @@ import { setSearchTerm} from '@/store/features/searchSlice';
 const Search = () => {
   const dispatch = useAppDispatch();
   const searchTerm = useAppSelector((state) => state.search.searchTerm);
-  // const [searchTerm, setSearchTerm] = useState('')
   
   const handleInputChange = (e) => {
     dispatch(setSearchTerm(e.target.value))
