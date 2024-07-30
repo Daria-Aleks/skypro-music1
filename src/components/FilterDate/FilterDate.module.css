@@ -12,3 +12,8 @@
 .link {
     margin-bottom: 15px;
 }
+
+.active {
+    color: #b672ff;
+    text-decoration: underline #b672ff;
+}

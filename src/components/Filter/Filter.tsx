@@ -24,7 +24,7 @@ const Filter: React.FC<FilterProps> = ({tracks}) => {
           </div>
           {activeFilter === 'author' && (
             <div>
-              <FilterDate date={uniqueArray(tracks, 'author')} offset={460}/> 
+              <FilterDate date={uniqueArray(tracks, 'author')} offset={460} type='authors'/> 
               <div className={styles.col}>{uniqueArray(tracks, 'author').length}</div>
             </div>
           )}
@@ -34,7 +34,7 @@ const Filter: React.FC<FilterProps> = ({tracks}) => {
           </div>
           {activeFilter === 'year' && (
             <div>
-              <FilterDate date={uniqueYears} offset={630}/> 
+              <FilterDate date={uniqueYears} offset={630} type='years'/> 
               <div className={styles.col}>{uniqueYears.length}</div>
           </div>
           )}
@@ -43,7 +43,7 @@ const Filter: React.FC<FilterProps> = ({tracks}) => {
            >жанру</div>
           {activeFilter === 'genre' && (
             <div>
-              <FilterDate date={uniqueArray(tracks, 'genre')} offset={790}/> 
+              <FilterDate date={uniqueArray(tracks, 'genre')} type='genre' offset={790}/> 
               <div className={styles.col}>{uniqueArray(tracks, 'genre').length}</div>
             </div>
           )}

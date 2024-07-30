@@ -22,6 +22,7 @@ interface Track {
 
 type TracksStateType = {
   tracksState: Track[];
+  tracksOldState: Track[],
   trackState: Track | null;
   pauseState: boolean;
   isLikedTrack: boolean;
@@ -35,6 +36,7 @@ type TracksStateType = {
 
 const initialState: TracksStateType = {
   tracksState: [],
+  tracksOldState: [],
   trackState: null,
   pauseState: true,
   isLikedTrack: false,
@@ -52,6 +54,7 @@ const tracksSlice = createSlice({
   reducers: {
     setTracksState: (state, action: PayloadAction<Track[]>) => {
       state.tracksState = action.payload;
+      state.tracksOldState = action.payload;
     },
     setTrackState: (state, action: PayloadAction<Track>) => {
       state.trackState = action.payload;
